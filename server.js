@@ -1,0 +1,7 @@
+var express = require('express');
+
+app = express();
+
+app.listen(3000 || process.env.PORT, function () {
+	console.log("Listening...");
+})
