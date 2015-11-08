@@ -1,3 +1,10 @@
+var net = require('net');
+var app = require('express')();
+var bodyParser = require('body-parser');
+
+app.use(bodyParser.urlencoded({ extended: false }))
+
+app.use(bodyParser.json())
 
 commands = [
 	"left",
@@ -6,14 +13,11 @@ commands = [
 	"down"
 ]
 
-
-var net = require('net');
-
-var server = net.createServer();
+var socketServer = net.createServer();
 
 connections = []
 
-server.on("connection", function(socket) {
+socketServer.on("connection", function(socket) {
 	connections.push(socket)
 	// console.log(connections);
 	socket.setEncoding("utf8")
@@ -31,21 +35,32 @@ server.on("connection", function(socket) {
 	})
 })
 
-server.on("error", function (err) {
+socketServer.on("error", function (err) {
 	console.log(err);
 })
 
-
-writeSomething = function () {
-	console.log("connections:", connections.length);
+writeDirection = function (direction) {
+	// console.log("connections:", connections.length);
 	for (var i = 0; i < connections.length; i++) {
 		// console.log(connections[i])
-		connections[i].write(commands[Math.floor(Math.random() * commands.length)])
+		command = direction
+		console.log("Wrote:", command);
+		connections[i].write(command)
 	}
 }
 
+// setInterval(writeDirection, 1000)
 
+socketServer.listen(42124);
 
-setInterval(writeSomething, 1000)
+app.get("/", function (req, res) {
+	res.sendFile(__dirname + "/index.html")
+})
 
-server.listen(42124);
+app.post("/move", function (req, res) {
+	console.log(req.body);
+	writeDirection(req.body.direction)
+	res.sendStatus(200)
+})
+
+app.listen("80")

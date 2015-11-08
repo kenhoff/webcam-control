@@ -1,12 +1,22 @@
 <html>
-	<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-	<script>
-		var socket = io();
-		socket.on("connect", function() {
-			socket.send("hallo")
-		})
-		socket.on("message", function (message) {
-			console.log("got message:", message);
-		})
+<head>
+	<script type="text/javascript", src = "https://code.jquery.com/jquery-2.1.4.min.js">
 	</script>
+	<script type="text/javascript">
+		function sendCommand(direction) {
+			$.ajax({
+				url: "/move",
+				method: "POST",
+				data: {direction: direction}
+			})
+		}
+	</script>
+</head>
+	<h1>
+		Webcam Control
+	</h1>
+	<button onClick = "sendCommand('up')">Up</button>
+	<button onClick = "sendCommand('down')">Down</button>
+	<button onClick = "sendCommand('left')">Left</button>
+	<button onClick = "sendCommand('right')">Right</button>
 </html>
