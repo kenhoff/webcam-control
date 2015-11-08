@@ -10,8 +10,12 @@ var net = require('net');
 var server = net.createServer();
 
 server.on("connection", function(socket) {
-	console.log("someone connected!");
-	socket.pipe(socket)
+	socket.setEncoding("utf8")
+	socket.write('Echo server\r\n');
+	socket.on("readable", function () {
+		console.log(socket.read())
+	});
 })
+
 
 server.listen(42124);

@@ -11,10 +11,28 @@ You should see:
 example code from
 http://www.hacksparrow.com/tcp-socket-programming-in-node-js.html.) */
 
+// var net = require('net');
+//
+// var client = new net.Socket();
+// client.connect({port: 41214, host: "127.0.0.1"}, function() {
+// 	console.log('Connected');
+// 	client.write('Hello, server! Love, Client.');
+// });
+//
+// client.on('data', function(data) {
+// 	console.log('Received: ' + data);
+// 	client.destroy(); // kill client after server's response
+// });
+//
+// client.on('close', function() {
+// 	console.log('Connection closed');
+// });
+
+
 var net = require('net');
 
 var client = new net.Socket();
-client.connect(1337, '127.0.0.1', function() {
+client.connect(42124, '127.0.0.1', function() {
 	console.log('Connected');
 	client.write('Hello, server! Love, Client.');
 });
