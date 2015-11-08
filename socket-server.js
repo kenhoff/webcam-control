@@ -14,4 +14,4 @@ server.on("connection", function(socket) {
 	socket.pipe(socket)
 })
 
-server.listen(42124, '127.0.0.1');
+server.listen(42124);
