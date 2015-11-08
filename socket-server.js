@@ -11,9 +11,9 @@ var server = net.createServer();
 
 server.on("connection", function(socket) {
 	socket.setEncoding("utf8")
-	socket.write('Echo server\r\n');
-	socket.on("readable", function () {
-		console.log(socket.read())
+	socket.on("data", function (data) {
+		console.log(data)
+		socket.write('Received:\t' + data + "\n");
 	});
 })
 
